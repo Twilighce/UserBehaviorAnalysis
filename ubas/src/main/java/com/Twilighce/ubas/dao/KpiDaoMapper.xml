@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Twilighce.ubas.dao.KpiDao">
+
+	<select id="getAmount" parameterType="com.Twilighce.ubas.domain.ReportParam"
+		resultType="map">
+		select sum(kpi_value) as 'kpi_value',kpi_code as 'kpi_code'
+		from t_kpi_hour where (createdate between
+		#{beginDate} and #{endDate})
+		group by kpi_code;
+	</select>
+
+	<select id="getSummary" parameterType="com.Twilighce.ubas.domain.ReportParam"
+		resultType="map">
+		select sum(pv) as 'pv',ip_amount as 'ip_amount',sum(jr) as
+		'jr',sum(tr) as 'tr'
+		from t_kpi_day where (createdate between
+		#{beginDate} and #{endDate})
+		group by pv,ip_amount,jr,tr;
+	</select>
+
+</mapper>
